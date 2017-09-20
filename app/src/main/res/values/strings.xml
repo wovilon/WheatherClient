@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">WheatherClient</string>
+    <string name="app_name">WeatherClient</string>
+    <string name="City">City</string>
+    <string name="Insert_city_here">Insert city here</string>
 </resources>
