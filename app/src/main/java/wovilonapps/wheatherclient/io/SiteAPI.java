@@ -8,7 +8,7 @@ import wovilonapps.wheatherclient.model.WeatherData;
 
 public interface SiteAPI {
     @GET("/users/{username}")
-    Call<WeatherData> getWeatherr(@Path("username") String username);
+    Call<WeatherData> getWeather(@Path("username") String username);
 
 
 }

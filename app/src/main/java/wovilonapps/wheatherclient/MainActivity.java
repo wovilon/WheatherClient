@@ -2,6 +2,7 @@ package wovilonapps.wheatherclient;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -27,17 +28,15 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    //Restofit part of vriables
-    private final String URL = "https://httpbin.org";
-    private final String KEY="trnsl.1.1.20170804T122548Z.3ca77883be4adf6a.3ed6b8d4d8e3e1f0538bc85d5fe7b8283492412800";
-    private Gson gson=new GsonBuilder().create();
-    //get request
+    //Restofit part of variables
+    private String URL;
+    private String KEY;
+    private Gson gson;
+    //"get"request
     //private Gson gson=new GsonBuilder().create();
-    private Retrofit retrofit_get=new Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl(URL)
-            .build();
-    private GetRequest interf_get = retrofit_get.create(GetRequest.class);
+    private Retrofit retrofit_get;
+    private GetRequest interf_get;
+
 
 
     @Override
@@ -51,7 +50,17 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        useGetMethod();
+        //describe Retrofit variables
+        URL = getString(R.string.URLBase);
+        KEY = getResources().getString(R.string.KEY);
+        gson = new GsonBuilder().create();
+        retrofit_get = new Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(URL)
+                .build();
+        interf_get = retrofit_get.create(GetRequest.class);
+
+        useGetMethod("/data/2.5/forecast?id=524901&APPID=d2a6b21c943e38d9e44edcc03c9912ad");
 
     }
 
@@ -63,14 +72,16 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
-    public void useGetMethod() {
-        Call<Object> call = interf_get.GETMethodRequest();
+    //get weather by city
+    public void useGetMethod(String url) {
+        Call<Object> call = interf_get.GETMethodRequest(url);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response1) {
-                Log.d("MyLOG", response1.toString());
-                Log.d("MyLOG", "response body: " + response1.body().toString());
+                try {
+                    Log.d("MyLOG", response1.toString());
+                    Log.d("MyLOG", "response body: " + response1.body().toString());
+                }catch (NullPointerException npe) {Log.d("MyLOG", "NullPointerException at useGerMethod()");}
             }
 
             @Override
@@ -79,4 +90,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void makeRequest(String city){
+        String url = "/data/2.5/forecast/daily?q=London&mode=xml&units=metric&cnt=7";
+        useGetMethod(url);
+    }
+
 }
