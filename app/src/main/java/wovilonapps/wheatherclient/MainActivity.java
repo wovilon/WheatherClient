@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         interf_get = retrofit_get.create(GetRequest.class);
 
-        useGetMethod("/data/2.5/forecast?id=524901&APPID=d2a6b21c943e38d9e44edcc03c9912ad");
+        useGetMethod("?id=524901&APPID=d2a6b21c943e38d9e44edcc03c9912ad");
 
     }
 
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     //get weather by city
     public void useGetMethod(String url) {
-        Call<Object> call = interf_get.GETMethodRequest(url);
+        Call<Object> call = interf_get.GETMethodRequest();
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response1) {
