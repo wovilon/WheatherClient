@@ -10,4 +10,7 @@
     <string name="max">max: </string>
     <string name="min">min: </string>
     <string name="TabCNewCity">New city</string>
+    <string name="Wind">Wind, m/s:</string>
+    <string name="NewCity">New city</string>
+    <string name="SavedCities">Saved cities</string>
 </resources>
