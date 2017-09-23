@@ -2,6 +2,7 @@ package wovilonapps.wheatherclient;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class WeekWeatherActivity extends AppCompatActivity {
 
         ArrayList<Map<String,Object>> data = new ArrayList<>();
         Map<String, Object> m;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM", Locale.ENGLISH);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM, hh:mm a", Locale.ENGLISH);
 
         for (int i=0; i<weathers.size(); i++){
             m = new HashMap<>();
@@ -50,7 +51,9 @@ public class WeekWeatherActivity extends AppCompatActivity {
             m.put(temp_min, Math.round(weathers.get(i).getTemp_min()) + "\u00B0C");
             m.put(clouds, getCloudsIcon(weathers.get(i).getCloudsIconId()));
             m.put(windSpeed, weathers.get(i).getWindSpeed());
-            m.put(windDirection, R.drawable.wind_arrow);
+            m.put(windDirection,rotateBitmap(
+                    BitmapFactory.decodeResource(getResources(), R.drawable.wind_arrow),
+                    (float) weathers.get(i).getWindDirection()) );
             data.add(m);
         }
 
@@ -75,7 +78,15 @@ public class WeekWeatherActivity extends AppCompatActivity {
         else if (id.equals("ic13d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic13d);
         else bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic50d);
 
+
         return bitmap;
+    }
+
+    public static Bitmap rotateBitmap(Bitmap source, float angle)
+    {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
 }

@@ -19,6 +19,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wovilonapps.wheatherclient.adapters.ViewPagerAdapter;
+import wovilonapps.wheatherclient.db.DbUpdator;
 import wovilonapps.wheatherclient.io.GetRequest;
 import wovilonapps.wheatherclient.io.JSONWeatherParser;
 
@@ -59,29 +60,32 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         interf_get = retrofit_get.create(GetRequest.class);
 
-        useGetMethod("London");
     }
 
     //setup page sweeper
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CityFragment(), "People");
-        adapter.addFragment(new CityListFragment(), "Group");
+        adapter.addFragment(new CityFragment(), getString(R.string.NewCity));
+        adapter.addFragment(new CityListFragment(), getString(R.string.SavedCities));
         viewPager.setAdapter(adapter);
     }
 
     //get weather by city
-    public void useGetMethod(String city) {
+    public void useGetMethod(final String city) {
         Call<Object> call = interf_get.GETMethodRequest(city,
                 "metric", getString(R.string.daysForecast), KEY);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response1) {
                 try {
+                    Log.d("MyLOG", response1.toString());
+                    Log.d("MyLOG", "response body: " + response1.body().toString());
+                    DbUpdator dbUpdator = new DbUpdator(MainActivity.this);
+                    dbUpdator.addCityToDb(city);
+
                     Gson gson = new Gson();
                     String jsonString = gson.toJson(response1.body());
                     JSONWeatherParser parser = new JSONWeatherParser(jsonString);
-
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("weathers", parser.processJson());
@@ -90,8 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtras(bundle);
                     startActivity(intent);
 
-                    Log.d("MyLOG", response1.toString());
-                    Log.d("MyLOG", "response body: " + response1.body().toString());
+
                 }catch (NullPointerException npe) {Log.d("MyLOG", "NullPointerException at useGerMethod()");}
             }
 

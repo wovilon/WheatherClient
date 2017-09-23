@@ -46,7 +46,7 @@ public class JSONWeatherParser {
              weather.setWindDirection(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONObject("wind").getDouble("deg"));
              weather.setDate(new Date(jsonObject.getJSONArray("list").getJSONObject(i)
-                     .getLong("dt")));
+                     .getLong("dt") * 1000));
              weathers.add(weather);
              }
 

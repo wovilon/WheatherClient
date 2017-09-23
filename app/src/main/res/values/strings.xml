@@ -1,7 +1,7 @@
 <resources>
     <string name="URLBase">http://api.openweathermap.org</string>
     <string name="KEY">d2a6b21c943e38d9e44edcc03c9912ad</string>
-    <string name="daysForecast">7</string>
+    <string name="daysForecast">56</string>
 
     <string name="app_name">WeatherClient</string>
     <string name="City">City</string>
