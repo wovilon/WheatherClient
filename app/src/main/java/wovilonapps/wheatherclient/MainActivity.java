@@ -1,19 +1,17 @@
 package wovilonapps.wheatherclient;
 
-import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.TabHost;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,6 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import wovilonapps.wheatherclient.adapters.ViewPagerAdapter;
 import wovilonapps.wheatherclient.io.GetRequest;
+import wovilonapps.wheatherclient.io.JSONWeatherParser;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -60,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         interf_get = retrofit_get.create(GetRequest.class);
 
-        useGetMethod("?id=524901&APPID=d2a6b21c943e38d9e44edcc03c9912ad");
-
+        useGetMethod("London");
     }
 
     //setup page sweeper
@@ -73,12 +71,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //get weather by city
-    public void useGetMethod(String url) {
-        Call<Object> call = interf_get.GETMethodRequest();
+    public void useGetMethod(String city) {
+        Call<Object> call = interf_get.GETMethodRequest(city,
+                "metric", getString(R.string.daysForecast), KEY);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response1) {
                 try {
+                    Gson gson = new Gson();
+                    String jsonString = gson.toJson(response1.body());
+                    JSONWeatherParser parser = new JSONWeatherParser(jsonString);
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("weathers", parser.processJson());
+
+                    Intent intent = new Intent(MainActivity.this, WeekWeatherActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
                     Log.d("MyLOG", response1.toString());
                     Log.d("MyLOG", "response body: " + response1.body().toString());
                 }catch (NullPointerException npe) {Log.d("MyLOG", "NullPointerException at useGerMethod()");}
@@ -92,8 +103,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void makeRequest(String city){
-        String url = "/data/2.5/forecast/daily?q=London&mode=xml&units=metric&cnt=7";
-        useGetMethod(url);
+        useGetMethod(city);
     }
 
 }

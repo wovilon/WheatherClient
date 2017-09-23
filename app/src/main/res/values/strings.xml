@@ -1,9 +1,13 @@
 <resources>
     <string name="URLBase">http://api.openweathermap.org</string>
     <string name="KEY">d2a6b21c943e38d9e44edcc03c9912ad</string>
+    <string name="daysForecast">7</string>
 
     <string name="app_name">WeatherClient</string>
     <string name="City">City</string>
     <string name="Insert_city_here">Insert city here</string>
     <string name="Get_weather">Get weather</string>
+    <string name="max">max: </string>
+    <string name="min">min: </string>
+    <string name="TabCNewCity">New city</string>
 </resources>
