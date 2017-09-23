@@ -26,6 +26,7 @@
         android:ems="10"
         android:hint="@string/Insert_city_here"
         android:inputType="text|textPersonName"
+        android:text="London"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
