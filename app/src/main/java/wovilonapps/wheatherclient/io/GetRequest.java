@@ -18,6 +18,3 @@ public interface GetRequest {
     Call<Object> GETMethodRequest();*/
 }
 
-//OK with Munchen
-//url=http://samples.openweathermap.org/data/2.5/forecast/daily?q=M%C3%BCnchen,DE&appid=b1b15e88fa797225412429c1c50c122a1}
-

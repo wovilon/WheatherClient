@@ -1,5 +1,5 @@
 
-package wovilonapps.wheatherclient.io;
+package wovilonapps.wheatherclient.model;
 
 import java.io.Serializable;
 import java.util.Date;

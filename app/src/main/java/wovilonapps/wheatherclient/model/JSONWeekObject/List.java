@@ -1,5 +1,5 @@
 
-package wovilonapps.wheatherclient.io.JSONWeekObject;
+package wovilonapps.wheatherclient.model.JSONWeekObject;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -22,6 +22,7 @@ public class DbUpdator {
     }
 
     public void addCityToDb(String city){
+        //make sure, that city is not already in DB
         int id=0;
         boolean cityAlreadyExists = false;
         for(int i=0; i<c.getCount(); i++){
@@ -31,6 +32,7 @@ public class DbUpdator {
                 break;
             }
         }
+        //if no city found, add city to DB
         if (!cityAlreadyExists){
             ContentValues data=new ContentValues();
             data.put("id",id);
@@ -38,10 +40,7 @@ public class DbUpdator {
             db.insert("CitiesTable", null, data);
             data.clear();
         }
-
-
     }
-
 
     public ArrayList<String> getAllCitiesFromDb(){
         ArrayList<String> cities = new ArrayList<>();

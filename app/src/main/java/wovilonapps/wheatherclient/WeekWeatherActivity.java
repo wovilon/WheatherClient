@@ -3,11 +3,8 @@ package wovilonapps.wheatherclient;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -18,8 +15,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import wovilonapps.wheatherclient.binders.ViewBinder;
-import wovilonapps.wheatherclient.io.MyWeather;
+import wovilonapps.wheatherclient.model.MyWeather;
 
+//activity for week weather forecast
 public class WeekWeatherActivity extends AppCompatActivity {
     ArrayList<MyWeather> weathers;
     ListView listView;
@@ -30,9 +28,9 @@ public class WeekWeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_week_weather);
 
         weathers = (ArrayList<MyWeather>) getIntent().getExtras().getSerializable("weathers");
-
         listView = (ListView)findViewById(R.id.weekWeatherListWiew);
 
+        //preparing simpleAadapter for listview
         String date = "date";
         String temp_max = "temp_max";
         String temp_min = "temp_min";
@@ -65,13 +63,13 @@ public class WeekWeatherActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
     }
-
+    //get recource ny id, if null - no icon, not exception
     private Bitmap getCloudsIcon(String id){
         int res = getResources().getIdentifier("ic"+id, "drawable", getPackageName());
         return BitmapFactory.decodeResource(getResources(), res);
     }
 
-
+    //abjust wird dicection icon
     public static Bitmap rotateBitmap(Bitmap source, float angle)
     {
         Matrix matrix = new Matrix();

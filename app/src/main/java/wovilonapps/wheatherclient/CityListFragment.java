@@ -1,10 +1,7 @@
 package wovilonapps.wheatherclient;
 
-import android.database.Cursor;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import wovilonapps.wheatherclient.binders.ViewBinder;
 import wovilonapps.wheatherclient.db.DbUpdator;
-import wovilonapps.wheatherclient.io.MyWeather;
-// frag
+
+// fragment with saved cities list
 public class CityListFragment extends Fragment {
     ArrayList<String> cities;
     ListView listView;
@@ -41,13 +35,13 @@ public class CityListFragment extends Fragment {
         return view;
     }
 
+    //making list of cities
     private void fillListView(View view){
         cities = new DbUpdator(getActivity()).getAllCitiesFromDb();
-
         listView = (ListView) view.findViewById(R.id.savedCitiesListView);
-
         String city = "city";
 
+        //add cities to data for listview
         ArrayList<Map<String,String>> data = new ArrayList<>();
         Map<String, String> m;
 
@@ -56,7 +50,7 @@ public class CityListFragment extends Fragment {
             m.put(city, cities.get(i));
             data.add(m);
         }
-
+        //abjust adapter
         String[] from = {city};
         int[] to = {R.id.cityForList};
 
@@ -73,6 +67,7 @@ public class CityListFragment extends Fragment {
 
     }
 
+    //refresh listview when user opens fragment
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

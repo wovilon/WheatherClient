@@ -1,4 +1,4 @@
-package wovilonapps.wheatherclient.io;
+package wovilonapps.wheatherclient.model;
 
 import android.util.Log;
 
@@ -35,21 +35,27 @@ public class JSONWeatherParser {
              weather = new MyWeather();
              weather.setTemp_max(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONObject("main").getDouble("temp_max"));
+
              weather.setTemp_min(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONObject("main").getDouble("temp_min"));
+
              weather.setCloudsIconId(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONArray("weather").getJSONObject(0).getString("icon"));
+
              weather.setClouds(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONArray("weather").getJSONObject(0).getString("description"));
+
              weather.setWindSpeed(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONObject("wind").getDouble("speed"));
+
              weather.setWindDirection(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getJSONObject("wind").getDouble("deg"));
+
              weather.setDate(new Date(jsonObject.getJSONArray("list").getJSONObject(i)
                      .getLong("dt") * 1000));
+
              weathers.add(weather);
              }
-
          }catch (JSONException jse) {
              Log.d("MyLOG","JSONException in JSONWeatherParser.processJson when processing");
          }

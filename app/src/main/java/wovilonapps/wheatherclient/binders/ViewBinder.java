@@ -12,11 +12,13 @@ public class ViewBinder implements SimpleAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Object data,
                                 String textRepresentation) {
+        // to put btmap in imageView
         if ((view instanceof ImageView) & (data instanceof Bitmap)) {
             ImageView iv = (ImageView) view;
             Bitmap bm = (Bitmap) data;
             iv.setImageBitmap(bm);
             return true;
+            //define rotation of bitmap of wind direction
         }else if (view.getId()== R.id.windDirection){
             ImageView iv = (ImageView) view;
             iv.setRotation(Float.parseFloat(data+""));

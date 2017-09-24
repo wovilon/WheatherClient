@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-
+// this fragmant takes text fron editTesxt and sends to MainActivity for GET request
 public class CityFragment extends Fragment {
     Button buttonGetWeather;
     EditText editTextCity;
@@ -30,6 +30,7 @@ public class CityFragment extends Fragment {
         buttonGetWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get text from editText ans sent
                 ((MainActivity) getActivity()).useGetMethod(editTextCity.getText().toString());
             }
         });

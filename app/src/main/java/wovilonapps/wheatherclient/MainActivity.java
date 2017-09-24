@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import wovilonapps.wheatherclient.adapters.ViewPagerAdapter;
 import wovilonapps.wheatherclient.db.DbUpdator;
 import wovilonapps.wheatherclient.io.GetRequest;
-import wovilonapps.wheatherclient.io.JSONWeatherParser;
+import wovilonapps.wheatherclient.model.JSONWeatherParser;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -77,16 +77,18 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.d("MyLOG", response1.toString());
                     Log.d("MyLOG", "response body: " + response1.body().toString());
+                    //add results to DB
                     DbUpdator dbUpdator = new DbUpdator(MainActivity.this);
                     dbUpdator.addCityToDb(city);
 
+                    // process JSON
                     Gson gson = new Gson();
                     String jsonString = gson.toJson(response1.body());
                     JSONWeatherParser parser = new JSONWeatherParser(jsonString);
 
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("weathers", parser.processJson());
-
+                    // start activity with weather forecast
                     Intent intent = new Intent(MainActivity.this, WeekWeatherActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
