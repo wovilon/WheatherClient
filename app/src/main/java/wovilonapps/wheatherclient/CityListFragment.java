@@ -1,11 +1,14 @@
 package wovilonapps.wheatherclient;
 
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -18,10 +21,11 @@ import java.util.Map;
 import wovilonapps.wheatherclient.binders.ViewBinder;
 import wovilonapps.wheatherclient.db.DbUpdator;
 import wovilonapps.wheatherclient.io.MyWeather;
-
+// frag
 public class CityListFragment extends Fragment {
     ArrayList<String> cities;
     ListView listView;
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class CityListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_city_list, container, false);
+        view = inflater.inflate(R.layout.fragment_city_list, container, false);
 
         fillListView(view);
         return view;
@@ -58,6 +62,24 @@ public class CityListFragment extends Fragment {
 
         final SimpleAdapter adapter = new SimpleAdapter(getActivity(), data, R.layout.city_list_item, from, to);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DbUpdator dbUpdator = new DbUpdator(getActivity());
+                String city = dbUpdator.getCityFromDb(i);
+                ((MainActivity) getActivity()).useGetMethod(city);
+            }
+        });
 
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            fillListView(view);
+        }
+        else {
+        }
     }
 }

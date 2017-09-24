@@ -16,7 +16,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginLeft="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:scaleType="fitCenter"
             app:layout_constraintLeft_toRightOf="@+id/Min"
             app:layout_constraintTop_toTopOf="parent"

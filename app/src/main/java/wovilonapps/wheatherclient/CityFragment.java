@@ -30,7 +30,7 @@ public class CityFragment extends Fragment {
         buttonGetWeather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).makeRequest(editTextCity.getText().toString());
+                ((MainActivity) getActivity()).useGetMethod(editTextCity.getText().toString());
             }
         });
 

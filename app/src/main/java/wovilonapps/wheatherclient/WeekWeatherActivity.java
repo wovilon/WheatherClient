@@ -67,20 +67,10 @@ public class WeekWeatherActivity extends AppCompatActivity {
     }
 
     private Bitmap getCloudsIcon(String id){
-        Bitmap bitmap;
-        if (id.equals("ic01d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic01d);
-        else if (id.equals("ic02d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic02d);
-        else if (id.equals("ic03d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic03d);
-        else if (id.equals("ic04d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic04d);
-        else if (id.equals("ic09d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic09d);
-        else if (id.equals("ic10d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic10d);
-        else if (id.equals("ic11d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic11d);
-        else if (id.equals("ic13d")) bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic13d);
-        else bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic50d);
-
-
-        return bitmap;
+        int res = getResources().getIdentifier("ic"+id, "drawable", getPackageName());
+        return BitmapFactory.decodeResource(getResources(), res);
     }
+
 
     public static Bitmap rotateBitmap(Bitmap source, float angle)
     {

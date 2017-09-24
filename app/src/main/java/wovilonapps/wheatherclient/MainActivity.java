@@ -10,9 +10,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -70,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-    //get weather by city
+    //get weather by city (Retrofit)
     public void useGetMethod(final String city) {
         Call<Object> call = interf_get.GETMethodRequest(city,
                 "metric", getString(R.string.daysForecast), KEY);
@@ -105,8 +102,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void makeRequest(String city){
-        useGetMethod(city);
-    }
 
 }
